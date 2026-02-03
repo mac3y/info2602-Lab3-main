@@ -1,6 +1,6 @@
 import typer
 from app.database import create_db_and_tables, get_session, drop_all
-from app.models import User, Todo, Category, TodoCategory
+from app.models import User, Todo, Category
 from fastapi import Depends
 from sqlmodel import select
 from sqlalchemy.exc import IntegrityError
@@ -125,7 +125,7 @@ def assign_category_to_todo(username:str, todo_id:int, category_text:str):
         db.add(todo)
         db.commit()
         print("Added category to todo")
-        
+
 
 if __name__ == "__main__":
     cli()
