@@ -127,5 +127,47 @@ def assign_category_to_todo(username:str, todo_id:int, category_text:str):
         print("Added category to todo")
 
 
+
+#Exercise
+
+@cli.command()
+def list_todos()
+    with get_session() as db:
+        todos = db.exec(select(Todo)).all()
+        for todo in todos:
+            print(f"ID: {todo.id}, Text: {todo.text}, User: {todo.user.username}, Done: {todo.done}")
+
+@cli.command()
+def delete_todo(todo_id: int):
+    with get_session() as db:
+        todo = db.get(Todo, todo_id)
+        if todo:
+            db.delete(todo)
+            b.commit()
+            print(f"Deleted todo ID {todo_id}")
+        else:
+            print(f"Todo ID {todo_id} not found")
+
+
+@cli.command()
+def complete_all_todos(username: str):
+    with get_session() as db:
+        user = db.exec(select(User).where(User.username == username)).first()
+        if not user:
+            print(f"User {username} not found")
+            return
+
+        for todo in user.todos:
+            todo.done = True
+            db.add(todo)
+        
+        db.commit()
+        print(f"Marked all todos for {username} as done")
+
+
+
+
+
+
 if __name__ == "__main__":
     cli()
