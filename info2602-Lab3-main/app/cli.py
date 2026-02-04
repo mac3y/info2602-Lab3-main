@@ -131,11 +131,12 @@ def assign_category_to_todo(username:str, todo_id:int, category_text:str):
 #Exercise
 
 @cli.command()
-def list_todos()
+def list_todos():
     with get_session() as db:
         todos = db.exec(select(Todo)).all()
         for todo in todos:
             print(f"ID: {todo.id}, Text: {todo.text}, User: {todo.user.username}, Done: {todo.done}")
+
 
 @cli.command()
 def delete_todo(todo_id: int):
@@ -143,7 +144,7 @@ def delete_todo(todo_id: int):
         todo = db.get(Todo, todo_id)
         if todo:
             db.delete(todo)
-            b.commit()
+            db.commit()
             print(f"Deleted todo ID {todo_id}")
         else:
             print(f"Todo ID {todo_id} not found")
